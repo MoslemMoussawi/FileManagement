@@ -1,0 +1,54 @@
+<!-- public/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Node.js Dashboard Login</h1>
+    </header>
+    <main>
+        <section id="login">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+                <p id="error-message" style="color: red; display: none;">Invalid username or password.</p>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Node.js Dashboard</p>
+    </footer>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard'; // Redirect on success
+                } else {
+                    document.getElementById('error-message').style.display = 'block'; // Show error
+                }
+            })
+            .catch(error => console.error('Error during login:', error));
+        });
+    </script>
+</body>
+</html>

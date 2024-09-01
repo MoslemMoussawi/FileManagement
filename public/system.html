@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>System Information</h1>
+    </header>
+    <main>
+        <section id="system-info">
+            <h2>Server System Info</h2>
+            <pre id="sys-info-content">Loading...</pre>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Node.js Dashboard</p>
+    </footer>
+    <script>
+        fetch('/sysinfo')
+            .then(response => response.json())
+            .then(data => {
+                const sysInfoContent = document.getElementById('sys-info-content');
+                sysInfoContent.textContent = JSON.stringify(data, null, 2)
+            })
+            .catch(error => {
+                console.error('Error fetching information from the server: ', error)
+            })
+    </script>
+</body>
+</html>
